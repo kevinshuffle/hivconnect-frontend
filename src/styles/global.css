@@ -31,28 +31,63 @@
     box-shadow: 0 0 0 2px white, 0 0 0 4px #dc2626;
   }
   
+  /* Skip links container */
+  .skip-links {
+    position: relative;
+  }
+  
   /* Skip links for screen readers and keyboard navigation */
   .skip-link {
-    @apply absolute -top-16 left-4 text-white px-4 py-2 rounded-md;
-    @apply focus:top-4 z-50 transition-all duration-200 font-semibold;
-    @apply focus:ring-4 focus:ring-white focus:ring-offset-2;
-    background-color: rgba(239, 68, 68, 0.9); /* primary-500 with transparency */
-    -webkit-backdrop-filter: blur(4px);
-    backdrop-filter: blur(4px);
+    /* Hide skip links off-screen by default */
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+    white-space: nowrap;
+    
+    /* Styling for when they appear */
+    @apply bg-primary-600 text-white px-4 py-3 rounded-lg font-semibold text-sm;
+    @apply shadow-lg border-2 border-white;
+    z-index: 9999;
+    transition: all 0.2s ease-in-out;
   }
   
-  .skip-link:hover {
-    background-color: rgba(220, 38, 38, 0.95); /* primary-600 with slight transparency on hover */
-  }
-  
-  /* Ensure skip links are visible when focused */
+  /* Make skip links visible and properly positioned when focused */
   .skip-link:focus {
-    position: absolute !important;
+    /* Reset positioning to make visible */
+    position: fixed !important;
     top: 1rem !important;
     left: 1rem !important;
-    clip: auto !important;
     width: auto !important;
     height: auto !important;
+    clip: auto !important;
+    overflow: visible !important;
+    white-space: normal !important;
+    
+    /* Enhanced focus styles */
+    @apply bg-primary-700 ring-4 ring-white ring-offset-2 ring-offset-primary-600;
+    transform: scale(1.05);
+  }
+  
+  /* Stack skip links when multiple are focused */
+  .skip-link:nth-child(1):focus {
+    top: 1rem !important;
+  }
+  
+  .skip-link:nth-child(2):focus {
+    top: 4.5rem !important;
+  }
+  
+  .skip-link:nth-child(3):focus {
+    top: 8rem !important;
+  }
+  
+  .skip-link:hover:focus {
+    @apply bg-primary-800;
+    transform: scale(1.08);
   }
 }
 
@@ -133,6 +168,8 @@
     
     .skip-link:focus {
       border: 3px solid yellow !important;
+      background: black !important;
+      color: yellow !important;
     }
     
     a:focus, button:focus {

@@ -98,10 +98,12 @@ const currentLanguage = getCurrentLanguage(Astro.currentLocale);
   </script>
 </head>
 <body class="h-full flex flex-col">
-  <!-- Skip to main content link for screen readers -->
-  <a href="#main-content" class="skip-link">Skip to main content</a>
-  <a href="#main-navigation" class="skip-link">Skip to navigation</a>
-  <a href="#footer" class="skip-link">Skip to footer</a>
+  <!-- Skip links for keyboard navigation and screen readers -->
+  <div class="skip-links" role="navigation" aria-label="Skip navigation links">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <a href="#main-navigation" class="skip-link">Skip to navigation</a>
+    <a href="#footer" class="skip-link">Skip to footer</a>
+  </div>
   
   <!-- Crisis/Emergency Quick Access -->
   <div id="crisis-banner" class="bg-error-600 text-white text-center py-2 px-4 text-sm" role="banner" aria-label="Emergency crisis support information">
