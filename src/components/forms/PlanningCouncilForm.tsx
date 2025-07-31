@@ -168,9 +168,34 @@ export default function PlanningCouncilForm() {
   const handleSubmit = async () => {
     if (validateStep(currentStep)) {
       try {
-        // Here you would typically send the data to your backend
-        console.log('Form submitted:', formData);
-        alert('Application submitted successfully!');
+        // Convert formData to FormData for Netlify submission
+        const netlifyFormData = new FormData();
+        
+        // Add form name for Netlify
+        netlifyFormData.append('form-name', 'planning-council-application');
+        
+        // Add all form fields
+        Object.entries(formData).forEach(([key, value]) => {
+          if (Array.isArray(value)) {
+            netlifyFormData.append(key, value.join(', '));
+          } else {
+            netlifyFormData.append(key, String(value));
+          }
+        });
+
+        // Submit to Netlify
+        const response = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(netlifyFormData as any).toString()
+        });
+
+        if (response.ok) {
+          // Redirect to success page
+          window.location.href = '/success';
+        } else {
+          throw new Error('Network response was not ok');
+        }
       } catch (error) {
         console.error('Error submitting form:', error);
         alert('Error submitting application. Please try again.');
@@ -227,6 +252,52 @@ export default function PlanningCouncilForm() {
 
   return (
     <div className="max-w-4xl mx-auto p-6">
+      {/* Hidden form for Netlify form detection */}
+      <form name="planning-council-application" data-netlify="true" hidden>
+        <input type="text" name="firstName" />
+        <input type="text" name="lastName" />
+        <input type="text" name="birthMonth" />
+        <input type="text" name="birthDay" />
+        <input type="text" name="birthYear" />
+        <input type="text" name="streetAddress" />
+        <input type="text" name="addressLine2" />
+        <input type="text" name="city" />
+        <input type="text" name="state" />
+        <input type="text" name="zipCode" />
+        <input type="text" name="country" />
+        <input type="email" name="email" />
+        <input type="email" name="confirmEmail" />
+        <input type="tel" name="homePhone" />
+        <input type="tel" name="cellPhone" />
+        <input type="text" name="bestTimeToCall" />
+        <input type="checkbox" name="isEmployed" />
+        <input type="text" name="employers" />
+        <input type="text" name="jobTitle" />
+        <input type="text" name="companyAddress" />
+        <input type="text" name="companyAddressLine2" />
+        <input type="text" name="companyCity" />
+        <input type="text" name="companyState" />
+        <input type="text" name="companyZipCode" />
+        <input type="text" name="mailingLists" />
+        <input type="checkbox" name="receivedRyanWhiteServices" />
+        <input type="text" name="gender" />
+        <input type="text" name="age" />
+        <input type="text" name="raceEthnicity" />
+        <input type="text" name="languages" />
+        <input type="text" name="diverseExperience" />
+        <input type="text" name="serviceProviders" />
+        <input type="checkbox" name="needsAssistance" />
+        <textarea name="assistanceDescription"></textarea>
+        <textarea name="whyJoinPlanningCouncil"></textarea>
+        <textarea name="hivAidsExperience"></textarea>
+        <textarea name="backgroundExperience"></textarea>
+        <textarea name="eligibilityInfo"></textarea>
+        <input type="text" name="membershipCategories" />
+        <input type="text" name="experienceInterests" />
+        <input type="checkbox" name="agreedToCommitments" />
+        <input type="checkbox" name="consentGiven" />
+      </form>
+      
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-4">
           Application for Planning Council Membership

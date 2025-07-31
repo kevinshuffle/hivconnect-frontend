@@ -190,7 +190,8 @@ const description = "Get in touch with the Middlesex, Somerset & Hunterdon Ryan 
           <div>
             <h2 class="text-3xl font-bold text-gray-900 mb-8">Send Us a Message</h2>
             
-            <form class="space-y-6" action="#" method="POST">
+            <form class="space-y-6" name="contact" data-netlify="true" method="POST" action="/success">
+              <input type="hidden" name="form-name" value="contact" />
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
                   <label for="first-name" class="form-label">First Name *</label>
